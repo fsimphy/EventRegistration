@@ -1,0 +1,2 @@
+<p style="margin: 10px; padding: 10px; border: 1px solid #BDD3A3; background: #D6E4C5;        height:1%; margin-bottom: 0; padding: 5px; font-weight: bold;">{$message}</p>
+{global_content name='accessdenied'}
