@@ -38,4 +38,6 @@ $lang['teamdeleted'] = 'Team gelöscht';
 $lang['eventdeleted'] = 'Veranstaltung gelöscht';
 $lang['event_does_not_exist'] = 'Diese Veranstaltung existiert nicht';
 $lang['team_does_not_exist'] = 'Dieses Team existiert nicht';
+$lang['maxmembersperteam'] = 'Maximale Anzahl an Teammitgliedern';
+$lang['minmembersperteam'] = 'Minimale Anzahl an Teammitgliedern';
 ?>

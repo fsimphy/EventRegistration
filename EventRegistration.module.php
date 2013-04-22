@@ -32,17 +32,17 @@ class EventRegistration extends CMSModule{
 		$this->SetParameterType('message', CLEAN_STRING);
 		for($i=1;$i<=30;$i++)
 		{	
-			$this->CreateParameter("member$i");
-			$this->SetParameterType("member$i", CLEAN_STRING);
+			$this->CreateParameter('member'.$i);
+			$this->SetParameterType('member'.$i, CLEAN_STRING);
  		}
         $this->CreateParameter('eventname');
         $this->SetParameterType('eventname', CLEAN_STRING);
         $this->CreateParameter('eventid');
         $this->SetParameterType('eventid', CLEAN_INT);
         $this->CreateParameter('maxmembersperteam');
-        $this->SetParameters('maxmembersperteam', CLEAN_INT);
+        $this->SetParameterType('maxmembersperteam', CLEAN_INT);
         $this->CreateParameter('minmembersperteam');
-        $this->SetParameters('minmembersperteam', CLEAN_INT);
+        $this->SetParameterType('minmembersperteam', CLEAN_INT);
     }
 
     function GetVersion()

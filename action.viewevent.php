@@ -23,6 +23,7 @@ else
 		{
 			$eventname = $row['eventname'];
 			$eventid = $row['id'];
+			$maxmembersperteam = $row['maxmembersperteam'];
 			$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(" ", "", mysql_real_escape_string($eventname)));
 			$Res = $db->Execute('SELECT * FROM '.$table);
 			if($Res !== false)
@@ -34,7 +35,7 @@ else
 				{
 					$text .= '<h3>'.$row['teamname'].'</h3>';
 					$text.= '<ul>';
-					for($i=1;$i<11;$i++)
+					for($i=1;$i<=$maxmembersperteam;$i++)
 					{
 						if($row["member$i"])
 						{

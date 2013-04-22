@@ -111,7 +111,7 @@ else
 					{
 						$command .= ", member$i";
 					}
-					$command . ', password) VALUES(\''.$params['teamname'].'\', \''.$params['mail'].'\'';
+					$command .= ', password) VALUES(\''.$params['teamname'].'\', \''.$params['mail'].'\'';
 					for($i=1;$i<=$maxmembersperteam;$i++)
 					{
 						$command .= ', \''.$params["member$i"].'\'';

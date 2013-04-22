@@ -11,20 +11,21 @@ if(empty($params['eventid']))
 $eventid = $params['eventid'];
 
 $db = $gCms->GetDb();
-$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=';
+$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
 $Res = $db->Execute($sql, Array($eventid));
 if($Res !== false)
 {
 	if($row = $Res->FetchRow())
 	{
-		$maxmembersperteam = $params['maxmembersperteam'];
+		$maxmembersperteam = $row['maxmembersperteam'];
+		$members = '';
 		$this->smarty->assign('teamname', $this->Lang('teamname'));
 		$this->smarty->assign('mail', $this->Lang('mail'));
 		for($i=1;$i<=$maxmembersperteam;$i++)
 		{
-			$this->smarty->assign('member'.$i, $this->Lang('member')." $i");
-			$this->smarty->assign('member'.$i.'input', $this->CreateInputText($id, "member$i", '', 20, 128));
+			$members .= '<tr><th style="text-align:left;">'.$this->Lang('member').' '.$i.':</th><td>'.$this->CreateInputText($id, "member$i", '', 20, 128).'</td></tr>';
 		}
+		$this->smarty->assign('members', $members);
 
 		$this->smarty->assign('message', $params['message']); 
 

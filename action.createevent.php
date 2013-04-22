@@ -25,16 +25,15 @@ $dict = NewDataDictionary($db);
 $flds = '
 	id I KEY NOTNULL AUTOINCREMENT PRIMARY,
 	teamname C(128),
-	mail C(128),
-'
+	mail C(128),';
 for($i=1;$i<=$maxmembersperteam;$i++)
 {
 	$flds .= " member$i C(128),";
 }
-$flds .= 'password C(32)';
+$flds .= ' password C(32)';
 
 $table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(' ', '', mysql_real_escape_string($eventname)));
-
+$message = $flds.$table;
 $sql2 = $dict->CreateTableSQL($table, $flds, $taboptarray);
 $Res1 = $db->Execute($sql1);
 $Res2 = $dict->ExecuteSQLArray($sql2);
@@ -45,7 +44,7 @@ if($Res1 !== false && $Res2 !== false)
 }
 else
 {
-	$message = $this->Lang('error_database');
+	//$message = $this->Lang('error_database');
 }
 
 $this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$message));

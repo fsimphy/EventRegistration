@@ -10,9 +10,9 @@ if (!$this->CheckPermission('Use EventRegistration'))
 $text = '';
 
 $text .= $this->CreateFormStart($id, 'createevent');
-$text .= $this->Lang('eventname').$this->CreateInputText($id, 'eventname', '', 20, 128);
-$text .= $this->Lang('maxmembersperteam').':'.$this->CreateInputNumber($id, 'maxmembersperteam', '10');
-$text .= $this->Lang('minmembersperteam').':'.$this->CreateInputNumber($id, 'minmembersperteam', '1');
+$text .= $this->Lang('eventname').':'.$this->CreateInputText($id, 'eventname', '', 20, 128);
+$text .= $this->Lang('maxmembersperteam').':'.$this->CreateInputText($id, 'maxmembersperteam', '10');
+$text .= $this->Lang('minmembersperteam').':'.$this->CreateInputText($id, 'minmembersperteam', '1');
 $text .= $this->CreateInputSubmit($id, 'submit', $this->Lang('createevent'));
 $text .= $this->CreateFormEnd();
 
