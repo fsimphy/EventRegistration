@@ -13,7 +13,9 @@ $dict = NewDataDictionary($db);
 
 $flds = '
     id I KEY NOTNULL AUTOINCREMENT PRIMARY,
-    eventname C(128)
+    eventname C(128),
+    maxmembersperteam UNSIGNED TINYINT,
+    minmembersperteam UNSIGNED TINYINT
     ';
 
 $sqlarray = $dict->CreateTableSQL(cms_db_prefix().'module_eventregistration', $flds, $taboptarray);

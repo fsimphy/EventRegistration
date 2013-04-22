@@ -7,14 +7,18 @@ if (!$this->CheckPermission('Use EventRegistration'))
 	return false;
 }
 
-if(empty($params['eventname']))
-	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('event_does_not_exist')));
+if(empty($params['eventname']) || empty($params['maxmembersperteam']) || empty($params['minmembersperteam']))
+	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_params')));
 $eventname = $params['eventname'];
+$maxmembersperteam = $params['maxmembersperteam'];
+if($maxmembersperteam < 1) $maxmembersperteam = 1;
+$minmembersperteam = $params['minmembersperteam'];
+if($minmembersperteam < 1) $minmembersperteam = 1;
 
 $db = $gCms->GetDb();
 $taboptarray = array('mysql' => 'ENGINE=MyISAM');
 
-$sql1 = 'INSERT INTO '.cms_db_prefix().'module_eventregistration (eventname) VALUES (\''.$params['eventname'].'\')';
+$sql1 = 'INSERT INTO '.cms_db_prefix().'module_eventregistration (eventname, maxmembersperteam, minmembersperteam) VALUES (\''.$eventname.'\', \''.$maxmembersperteam.'\', \''.$minmembersperteam.'\')';
 
 $dict = NewDataDictionary($db);
 
@@ -22,18 +26,12 @@ $flds = '
 	id I KEY NOTNULL AUTOINCREMENT PRIMARY,
 	teamname C(128),
 	mail C(128),
-	member1 C(128),
-	member2 C(128),
-	member3 C(128),
-	member4 C(128),
-	member5 C(128),
-	member6 C(128),
-	member7 C(128),
-	member8 C(128),
-	member9 C(128),
-	member10 C(128),
-	password C(32)
-    ';
+'
+for($i=1;$i<=$maxmembersperteam;$i++)
+{
+	$flds .= " member$i C(128),";
+}
+$flds .= 'password C(32)';
 
 $table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(' ', '', mysql_real_escape_string($eventname)));
 
