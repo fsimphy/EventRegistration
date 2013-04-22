@@ -13,7 +13,7 @@ if(empty($params['eventid']))
 }
 else if(empty($params['teamid']))
 {
-	$this->Redirect($id, 'defaultadmin', '', Array("module_message"=>$this->Lang('team_does_not_exist')))
+	$this->Redirect($id, 'defaultadmin', '', Array("module_message"=>$this->Lang('team_does_not_exist')));
 }
 else
 {
