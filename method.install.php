@@ -25,6 +25,9 @@ $db->CreateSequence(cms_db_prefix().'module_eventregistration_seq');
 
 $this->CreatePermission('Use EventRegistration', $this->Lang('permission'));
 
+$this->SetPreference('from', 'root@localhost');
+$this->SetPreference('fromuser', 'CMS Administrator');
+
 $this->Audit(0, $this->Lang('friendlyname'), $this->Lang('installed', $this->GetVersion()));
 
 ?>
