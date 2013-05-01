@@ -40,4 +40,6 @@ $lang['event_does_not_exist'] = 'Diese Veranstaltung existiert nicht';
 $lang['team_does_not_exist'] = 'Dieses Team existiert nicht';
 $lang['maxmembersperteam'] = 'Maximale Anzahl an Teammitgliedern';
 $lang['minmembersperteam'] = 'Minimale Anzahl an Teammitgliedern';
+$lang['tab_title_overview'] = 'Veranstaltungen administrieren';
+$lang['tab_title_settings'] = 'Einstellungen';
 ?>

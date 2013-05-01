@@ -16,13 +16,13 @@ if (!empty($params['active_tab'])) {
 
 $text = '';
 
-echo $this->StartTabHeaders();
-	echo $this->SetTabHeader('overview',$this->Lang('tab_title_overview'), ('overview' == $tab)?true:false);
-	echo $this->SetTabHeader('settings', $this->Lang('tab_title_settings'), ('settings' == $tab)?true:false);
-echo $this->EndTabHeaders();
+$text .= $this->StartTabHeaders();
+	$text .= $this->SetTabHeader('overview',$this->Lang('tab_title_overview'), ('overview' == $tab)?true:false);
+	$text .= $this->SetTabHeader('settings', $this->Lang('tab_title_settings'), ('settings' == $tab)?true:false);
+$text .= $this->EndTabHeaders();
 
-echo $this->StartTabContent();
-	echo $this->StartTab('overview');
+$text .= $this->StartTabContent();
+	$text .= $this->StartTab('overview', $params);
 		$text .= $this->CreateFormStart($id, 'createevent');
 		$text .= $this->Lang('eventname').':'.$this->CreateInputText($id, 'eventname', '', 20, 128);
 		$text .= $this->Lang('maxmembersperteam').':'.$this->CreateInputText($id, 'maxmembersperteam', '10');
@@ -43,19 +43,18 @@ echo $this->StartTabContent();
 		}
 		$text .= '</ul>';
 
-		$this->smarty->assign('text', $text);
 
-		echo $this->ProcessTemplate('adminpanel.tpl');
-	echo $this->EndTab();
-	echo $this->StartTab('settings');
+	$text .= $this->EndTab();
+	$text .= $this->StartTab('settings', $params);
 		$text .= $this->CreateFormStart($id, 'setadminprefs', $returnid);
-		$text .= $this->Lang('fromuser').$this->CreateInputText( $id, 'input_fromuser', $this->GetPreference('fromuser'), 50, 80));
-		$text .= $this->Lang('from').$this->CreateInputText( $id, 'input_from', $this->GetPreference('from'), 80, 80));
+		$text .= $this->Lang('fromuser').$this->CreateInputText( $id, 'input_fromuser', $this->GetPreference('fromuser'), 50, 80);
+		$text .= $this->Lang('from').$this->CreateInputText( $id, 'input_from', $this->GetPreference('from'), 80, 80);
 		$text .= $this->CreateInputSubmit($id, 'submit', $this->Lang('save'));
-		$text .= $this->CreateFormEnd());
-	echo $this->EndTab();
-echo $this->EndTabContent();
+		$text .= $this->CreateFormEnd();
+	$text .= $this->EndTab();
+$text .= $this->EndTabContent();
 
-
+$this->smarty->assign('text', $text);
+echo  $this->ProcessTemplate('adminpanel.tpl');
 ?>
 
