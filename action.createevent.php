@@ -11,9 +11,11 @@ if(empty($params['eventname']) || empty($params['maxmembersperteam']) || empty($
 	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_params')));
 $eventname = $params['eventname'];
 $maxmembersperteam = $params['maxmembersperteam'];
-if($maxmembersperteam < 1) $maxmembersperteam = 1;
 $minmembersperteam = $params['minmembersperteam'];
 if($minmembersperteam < 1) $minmembersperteam = 1;
+if($minmembersperteam > 30) $minmembersperteam = 30;
+if($maxmembersperteam < $minmembersperteam) $maxmembersperteam = $minmembersperteam;
+if($maxmembersperteam > 30) $maxmembersperteam = 30;
 
 $db = $gCms->GetDb();
 $taboptarray = array('mysql' => 'ENGINE=MyISAM');
