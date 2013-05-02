@@ -46,4 +46,5 @@ $lang['fromuser'] = '"Von"-Username';
 $lang['from'] = '"Von"-Adresse';
 $lang['save'] = 'Speichern';
 $lang['back_to_eventlist'] = 'Zurück zur Veranstaltungsliste';
+$lang['preferences_updated_successfully'] = 'Einstellungen erfolgreich gespeichert';
 ?>

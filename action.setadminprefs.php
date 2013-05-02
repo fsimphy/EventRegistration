@@ -17,6 +17,6 @@ if(isset($params['input_fromuser']))
 	$this->SetPreference('fromuser',$params['input_fromuser']);
 }
 
-$message = $this->Lang('preferences_updated_sucessfully');
+$message = $this->Lang('preferences_updated_successfully');
 $this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$message, 'active_tab' => 'settings'));
 ?>
