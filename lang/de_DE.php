@@ -42,4 +42,8 @@ $lang['maxmembersperteam'] = 'Maximale Anzahl an Teammitgliedern';
 $lang['minmembersperteam'] = 'Minimale Anzahl an Teammitgliedern';
 $lang['tab_title_overview'] = 'Veranstaltungen administrieren';
 $lang['tab_title_settings'] = 'Einstellungen';
+$lang['fromuser'] = '"Von"-Username';
+$lang['from'] = '"Von"-Adresse';
+$lang['save'] = 'Speichern';
+$lang['back_to_eventlist'] = 'Zurück zur Veranstaltungsliste';
 ?>

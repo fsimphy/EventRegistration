@@ -29,5 +29,8 @@ $db->DropSequence(cms_db_prefix().'module_eventregistration_seq' );
 
 $this->RemovePermission('Use EventRegistration');
 
+$this->RemovePreference('fromuser');
+$this->RemovePreference('from');
+
 $this->Audit(0, $this->Lang('friendlyname'), $this->Lang('uninstalled'));
 ?>

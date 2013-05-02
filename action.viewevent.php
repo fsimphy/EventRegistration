@@ -46,6 +46,7 @@ else
 					$text .= '<p>'.$this->Lang('contact').': '.$row['mail'].'</p>';
 					$text .= $this->CreateLink($id, 'deleteteam', '', $this->Lang('deleteteam'), Array('eventid'=>$eventid,'teamid'=>$row['id']), $this->Lang('really_delete')).'<hr/>';
 				}
+				$text .= $this->CreateLink($id, 'defaultadmin', $returnid, '« '.$this->Lang('back_to_eventlist'), Array('active_tab' => 'overview'));
 			}
 		}
 		else

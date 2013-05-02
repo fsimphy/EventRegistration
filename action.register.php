@@ -117,16 +117,17 @@ else
 						$command .= ', \''.$params["member$i"].'\'';
 					}
 					$command .= ', \''.$password.'\')';
+					$message = $command;
 					$Res = $db->Execute($command);
 					if($Res !== false)
 					{
 						$message = $this->Lang('registration_successful');
 						//TODO: remove hardcoded "From"
-						sendMail($params['mail'], $this->Lang('mail_text_register', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_register', $eventname), 'Fachschaft Mathematik/Physik Universität Regensburg<physik.fachschaft@physik.uni-regensburg.de>');
+						sendMail($params['mail'], $this->Lang('mail_text_register', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_register', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 					}
 					else
 					{
-						$message = $this->Lang('error_database');
+						//$message = $this->Lang('error_database');
 					}
 				}
 				else if($update)
@@ -134,15 +135,14 @@ else
 					$command = 'UPDATE '.$table.' SET mail=\''.$params['mail'].'\'';
 					for($i=1;$i<=$maxmembersperteam;$i++)
 					{
-						$command .= ", member$i=\'".$params["member$i"].'\'';
+						$command .= ", member$i='".$params["member$i"].'\'';
 					}
 					$command .= 'WHERE password=\''.$password.'\' AND teamname=\''.$params['teamname'].'\'';
 					$Res = $db->Execute($command);
 					if($Res !== false)
 					{
 						$message = $this->Lang('update_successful');
-						//TODO: remove hardcoded "From"
-						sendMail($params['mail'], $this->Lang('mail_text_update', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_update', $eventname), 'Fachschaft Mathematik/Physik Universität Regensburg<physik.fachschaft@physik.uni-regensburg.de>');
+						sendMail($params['mail'], $this->Lang('mail_text_update', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_update', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 
 					}
 				}
