@@ -46,7 +46,7 @@ if($Res1 !== false && $Res2 !== false)
 }
 else
 {
-	//$message = $this->Lang('error_database');
+	$message = $this->Lang('error_database');
 }
 
 $this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$message));
