@@ -117,17 +117,15 @@ else
 						$command .= ', \''.$params["member$i"].'\'';
 					}
 					$command .= ', \''.$password.'\')';
-					$message = $command;
 					$Res = $db->Execute($command);
 					if($Res !== false)
 					{
 						$message = $this->Lang('registration_successful');
-						//TODO: remove hardcoded "From"
 						sendMail($params['mail'], $this->Lang('mail_text_register', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_register', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 					}
 					else
 					{
-						//$message = $this->Lang('error_database');
+						$message = $this->Lang('error_database');
 					}
 				}
 				else if($update)
@@ -144,6 +142,10 @@ else
 						$message = $this->Lang('update_successful');
 						sendMail($params['mail'], $this->Lang('mail_text_update', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_update', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 
+					}
+					else
+					{
+						$message = $this->Lang('error_database');
 					}
 				}
 			}
