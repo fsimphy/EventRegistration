@@ -25,13 +25,13 @@ else
 		if($row = $Res->FetchRow())
 		{
 			$eventid = $row['id'];
-			$sql = 'SELECT * FROM 'cms_db_prefix().'module_eventregistration_teams WHERE id=? AND event_id=?';
+			$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_teams WHERE id=? AND event_id=?';
 			$Res = $db->Execute($sql, Array($params['teamid'], $eventid));
 			if($Res !== false)
 			{
 				if($Res->FetchRow())
 				{
-					$sql = 'DELETE FROM 'cms_db_prefix().'module_eventregistration_teams WHERE id=? AND event_id=?';
+					$sql = 'DELETE FROM '.cms_db_prefix().'module_eventregistration_teams WHERE id=? AND event_id=?';
 					$db->Execute($sql, Array($params['teamid'], $eventid));
 					$this->Redirect($id, 'viewevent', '', Array('module_message'=>$this->Lang('teamdeleted'), 'eventid'=>$eventid));
 				}

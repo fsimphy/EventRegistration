@@ -53,7 +53,7 @@ if(empty($params['teamname']) || empty($params['mail']) || empty($params['phone'
 else
 {
 	$eventid = mysql_real_escape_string($params['eventid']);
-	$teamname = mysql_real_escape_string($params['teamname'];
+	$teamname = mysql_real_escape_string($params['teamname']);
 	$password = mysql_real_escape_string($params['password']);
 	$mail = mysql_real_escape_string($params['mail']);
 	$phone = mysql_real_escape_string($params['phone']);
@@ -65,8 +65,8 @@ else
 	{
 		if($row = $Res->FetchRow())
 		{
-			$eventname = $row[eventname;]
-			$sql = 'SELECT teamname, password FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=? ODER by id';
+			$eventname = $row[eventname];
+			$sql = 'SELECT teamname, password FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=? ORDER by id';
 			$Res = $db->Execute($sql, Array($eventid));
 			if($Res !== false)
 			{
@@ -92,7 +92,7 @@ else
 					
 			if($register)
 			{
-				$command= 'INSERT INTO '.$table.' (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
+				$command= 'INSERT INTO 'cms_db_prefix().'module_eventregistration_teams (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
 				$Res = $db->Execute($command);
 				if($Res !== false)
 				{

@@ -11,7 +11,7 @@ if(empty($params['eventid']))
 $eventid = $params['eventid'];
 
 $db = $gCms->GetDb();
-$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 $Res = $db->Execute($sql, Array($eventid));
 if($Res !== false)
 {

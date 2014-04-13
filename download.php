@@ -4,9 +4,8 @@ require_once(dirname(__FILE__)."/../../include.php");
 global $gCms;
 if(is_null($gCms))
 	$gCms = cmsms();
-$v =& $gCms->modules['EventRegistration']['object'];
-if(is_null($dm))
-	$er = &CMSModule::GetModuleInstance('EventRegistration');
+
+$er = &CMSModule::GetModuleInstance('EventRegistration');
 
 if(!$er->CheckPermission('Use EventRegistration') || empty($_GET['eventid']))
 {

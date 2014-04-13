@@ -25,7 +25,7 @@ $this->CreatePermission('Use EventRegistration', $this->Lang('permission'));
 
 $taboptarray = array(
 	'mysql' => 'ENGINE=MyISAM',
-	'constraints' => 'FOREIGN KEY (event_id) REFERENCES 'cms_db_prefix().'module_eventregistration_events (id)'
+	'constraints' => 'FOREIGN KEY (event_id) REFERENCES '.cms_db_prefix().'module_eventregistration_events (id)'
 );
 
 $flds = '

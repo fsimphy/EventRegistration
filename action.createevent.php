@@ -14,7 +14,7 @@ $eventname = $params['eventname'];
 $db = $gCms->GetDb();
 
 $sql = 'INSERT INTO '.cms_db_prefix().'module_eventregistration_events (eventname) VALUES (\''.$eventname.'\')';
-$Res = $db->Execute($sql1);
+$Res = $db->Execute($sql);
 
 if($Res !== false)
 {
