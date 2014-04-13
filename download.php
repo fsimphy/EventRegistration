@@ -16,31 +16,26 @@ if(!$er->CheckPermission('Use EventRegistration') || empty($_GET['eventid']))
 $eventid= mysql_real_escape_string($_GET['eventid']);
 
 $db = $gCms->GetDb();
-$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 $Res = $db->Execute($sql, Array($eventid));
 if($Res !== false)
 {
 	if($row = $Res->FetchRow())
 	{
 		$eventname = $row['eventname'];
-		$maxmembersperteam = $row['maxmembersperteam'];
-		$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(" ", "", mysql_real_escape_string($eventname)));
-		$Res = $db->Execute("SELECT * FROM ".$table);
+		$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=?';
+		$Res = $db->Execute($sql, Array($eventid));
 		if($Res !== false)
 		{
 			header('Content-type: application/txt');
 			header('Content-Disposition: attachment; filename="'.$eventname.'.csv"');
 			echo $er->Lang('teamname').";";
-			for($i=1;$i<=$maxmembersperteam;$i++)
-				echo $er->Lang('member')." $i;";
+			echo $er->Lang('phone').";";
 			echo $er->Lang('mail')."\r\n\r\n";
 			while($row = $Res->FetchRow())
 			{
 				echo $row['teamname'].";";
-				for($i=1;$i<=$maxmembersperteam;$i++)
-				{
-					echo $row["member$i"].";";
-				}
+				echo $row['phone'].";";
 				echo $row['mail']."\r\n";
 			}
 		}

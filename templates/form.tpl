@@ -14,13 +14,20 @@
 </tr>
 <tr>
 <th style="text-align:left;">
+{$phone}:
+</th>
+<td>
+{$phoneinput}
+</td>
+</tr>
+<tr>
+<th style="text-align:left;">
 {$mail}:
 </th>
 <td>
 {$mailinput}
 </td>
 </tr>
-{$members}
 <tr>
 <th style="text-align:left;">
 {$password}:
@@ -33,7 +40,7 @@
 <td>
 </td>
 <td>
-{$volleyballsubmit}
+{$submit}
 </td>
 </tr>
 </table>

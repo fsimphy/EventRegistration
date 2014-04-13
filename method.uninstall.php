@@ -9,23 +9,16 @@ $db = $gCms->GetDb();
 
 $taboptarray = array('mysql' => 'ENGINE=MyISAM');
 $dict = NewDataDictionary($db);
-$Res = $db->Execute('SELECT eventname FROM '.cms_db_prefix().'module_eventregistration ORDER BY id');
 
-if($Res !== false)
-{
-	while($row = $Res->FetchRow())
-	{
-		$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(' ', '', mysql_real_escape_string($row['eventname'])));
-		$sqlarray = $dict->DropTableSQL($table);
-		$dict->ExecuteSQLArray($sqlarray);
-		$db->DropSequence($table."_seq" );
-	}
-}
-
-$sqlarray = $dict->DropTableSQL(cms_db_prefix().'module_eventregistration');
+$sqlarray = $dict->DropTableSQL(cms_db_prefix().'module_eventregistration_events');
 $dict->ExecuteSQLArray($sqlarray);
 
-$db->DropSequence(cms_db_prefix().'module_eventregistration_seq' );
+$db->DropSequence(cms_db_prefix().'module_eventregistration_events_seq' );
+
+$sqlarray = $dict->DropTableSQL(cms_db_prefix().'module_eventregistration_teams');
+$dict->ExecuteSQLArray($sqlarray);
+
+$db->DropSequence(cms_db_prefix().'module_eventregistration_teams_seq' );
 
 $this->RemovePermission('Use EventRegistration');
 

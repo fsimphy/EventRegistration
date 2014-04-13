@@ -7,40 +7,16 @@ if (!$this->CheckPermission('Use EventRegistration'))
 	return false;
 }
 
-if(empty($params['eventname']) || empty($params['maxmembersperteam']) || empty($params['minmembersperteam']))
+if(empty($params['eventname']))
 	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_params')));
 $eventname = $params['eventname'];
-$maxmembersperteam = $params['maxmembersperteam'];
-$minmembersperteam = $params['minmembersperteam'];
-if($minmembersperteam < 1) $minmembersperteam = 1;
-if($minmembersperteam > 30) $minmembersperteam = 30;
-if($maxmembersperteam < $minmembersperteam) $maxmembersperteam = $minmembersperteam;
-if($maxmembersperteam > 30) $maxmembersperteam = 30;
 
 $db = $gCms->GetDb();
-$taboptarray = array('mysql' => 'ENGINE=MyISAM');
 
-$sql1 = 'INSERT INTO '.cms_db_prefix().'module_eventregistration (eventname, maxmembersperteam, minmembersperteam) VALUES (\''.$eventname.'\', \''.$maxmembersperteam.'\', \''.$minmembersperteam.'\')';
+$sql = 'INSERT INTO '.cms_db_prefix().'module_eventregistration_events (eventname) VALUES (\''.$eventname.'\')';
+$Res = $db->Execute($sql1);
 
-$dict = NewDataDictionary($db);
-
-$flds = '
-	id I KEY NOTNULL AUTOINCREMENT PRIMARY,
-	teamname C(128),
-	mail C(128),';
-for($i=1;$i<=$maxmembersperteam;$i++)
-{
-	$flds .= " member$i C(128),";
-}
-$flds .= ' password C(32)';
-
-$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(' ', '', mysql_real_escape_string($eventname)));
-$message = $flds.$table;
-$sql2 = $dict->CreateTableSQL($table, $flds, $taboptarray);
-$Res1 = $db->Execute($sql1);
-$Res2 = $dict->ExecuteSQLArray($sql2);
-$db->CreateSequence($table.'_seq');
-if($Res1 !== false && $Res2 !== false)
+if($Res !== false)
 {
 	$message = $this->Lang('creation_successful');
 }

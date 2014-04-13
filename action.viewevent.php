@@ -14,7 +14,7 @@ if(empty($params['eventid']))
 else
 {
 	$db = $gCms->GetDb();
-	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 	$Res = $db->Execute($sql, Array($params['eventid']));
 
 	if($Res !== false)
@@ -23,9 +23,8 @@ else
 		{
 			$eventname = $row['eventname'];
 			$eventid = $row['id'];
-			$maxmembersperteam = $row['maxmembersperteam'];
-			$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(" ", "", mysql_real_escape_string($eventname)));
-			$Res = $db->Execute('SELECT * FROM '.$table);
+			$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=?';
+			$Res = $db->Execute($sql, Array($eventid));
 			if($Res !== false)
 			{
 				$text .= '<h2>'.$eventname.'</h2>';
@@ -34,16 +33,7 @@ else
 				while($row = $Res->FetchRow())
 				{
 					$text .= '<h3>'.$row['teamname'].'</h3>';
-					$text.= '<ul>';
-					for($i=1;$i<=$maxmembersperteam;$i++)
-					{
-						if($row["member$i"])
-						{
-							$text .= '<li>'.$row["member$i"].'</li>';
-						}
-					}
-					$text .= '</ul>';
-					$text .= '<p>'.$this->Lang('contact').': '.$row['mail'].'</p>';
+					$text .= '<p>'.$this->Lang('mail').': '.$row['mail'].'<br/>'.$this->Lang('phone').': '.$row['phone'].'</p>';
 					$text .= $this->CreateLink($id, 'deleteteam', '', $this->Lang('deleteteam'), Array('eventid'=>$eventid,'teamid'=>$row['id']), $this->Lang('really_delete')).'<hr/>';
 				}
 				$text .= $this->CreateLink($id, 'defaultadmin', $returnid, '« '.$this->Lang('back_to_eventlist'), Array('active_tab' => 'overview'));

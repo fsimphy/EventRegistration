@@ -20,34 +20,27 @@ class EventRegistration extends CMSModule{
     {
         $this->RegisterModulePlugin();
         $this->RestrictUnknownParams();
-		$this->CreateParameter('teamname');
+        $this->CreateParameter('teamname');
         $this->SetParameterType('teamname', CLEAN_STRING);
- 		$this->CreateParameter('mail');
+        $this->CreateParameter('mail');
         $this->SetParameterType('mail', CLEAN_STRING);
- 		$this->CreateParameter('password');
+        $this->CreateParameter('phone');
+        $this->SetParameterType('phone', CLEAN_STRING);
+        $this->CreateParameter('password');
         $this->SetParameterType('password', CLEAN_STRING);
-  		$this->CreateParameter('submit');
+        $this->CreateParameter('submit');
         $this->SetParameterType('submit', CLEAN_STRING);
-		$this->CreateParameter('message');
-		$this->SetParameterType('message', CLEAN_STRING);
-		for($i=1;$i<=30;$i++)
-		{	
-			$this->CreateParameter('member'.$i);
-			$this->SetParameterType('member'.$i, CLEAN_STRING);
- 		}
+        $this->CreateParameter('message');
+        $this->SetParameterType('message', CLEAN_STRING);
         $this->CreateParameter('eventname');
         $this->SetParameterType('eventname', CLEAN_STRING);
         $this->CreateParameter('eventid');
         $this->SetParameterType('eventid', CLEAN_INT);
-        $this->CreateParameter('maxmembersperteam');
-        $this->SetParameterType('maxmembersperteam', CLEAN_INT);
-        $this->CreateParameter('minmembersperteam');
-        $this->SetParameterType('minmembersperteam', CLEAN_INT);
     }
 
     function GetVersion()
     {
-        return '0.1';
+        return '0.2';
     }
 
     function GetHelp()
@@ -98,11 +91,6 @@ class EventRegistration extends CMSModule{
     function MinimumCMSVersion()
     {
         return "1.9";
-    }
-
-    function MaximumCMSVersion()
-    {
-        return "1.10.9";
     }
 
     function InstallPostMessage()

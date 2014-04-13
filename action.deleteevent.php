@@ -14,20 +14,25 @@ else
 	$db =& $this->GetDb();
 	$dict = NewDataDictionary($db);
 
-	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 	$Res = $db->Execute($sql, Array($params['eventid']));
 	if($Res !== false)
 	{
 		if($row = $Res->FetchRow())
 		{
-			$eventname = $row['eventname'];
 			$eventid = $row['id'];
-			$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(" ", "", mysql_real_escape_string($eventname)));
-
-			$sqlarray = $dict->DropTableSQL($table);
-			$dict->ExecuteSQLArray($sqlarray);
-			$db->DropSequence($table.'_seq');
-			$sql = 'DELETE FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+			$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=?';
+			$Res = $db->Execute($sql, Array($params['eventid']));
+			if($Res !== false)
+			{
+				while($row = $Res->FetchRow())
+				{
+					$teamid = $row['id'];
+					$sql = 'DELETE FROM '.cms_db_prefix().'module_eventregistration_teams WHERE id=?';
+					$db->Execute($sql, Array($teamid));
+				}
+			}
+			$sql = 'DELETE FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 			$db->Execute($sql, Array($eventid));
 			$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('eventdeleted')));
 		}

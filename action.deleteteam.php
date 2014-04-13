@@ -18,23 +18,21 @@ else if(empty($params['teamid']))
 else
 {
 	$db =& $this->GetDb();
-	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 	$Res = $db->Execute($sql, Array($params['eventid']));
 	if($Res !== false)
 	{
 		if($row = $Res->FetchRow())
 		{
-			$eventname = $row['eventname'];
 			$eventid = $row['id'];
-			$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(" ", "", mysql_real_escape_string($eventname)));
-			$sql = 'SELECT * FROM '.$table.' WHERE id=?';
-			$Res = $db->Execute($sql, Array($params['teamid']));
+			$sql = 'SELECT * FROM 'cms_db_prefix().'module_eventregistration_teams WHERE id=? AND event_id=?';
+			$Res = $db->Execute($sql, Array($params['teamid'], $eventid));
 			if($Res !== false)
 			{
 				if($Res->FetchRow())
 				{
-					$sql = 'DELETE FROM '.$table.' WHERE id=?';
-					$db->Execute($sql, Array($params['teamid']));
+					$sql = 'DELETE FROM 'cms_db_prefix().'module_eventregistration_teams WHERE id=? AND event_id=?';
+					$db->Execute($sql, Array($params['teamid'], $eventid));
 					$this->Redirect($id, 'viewevent', '', Array('module_message'=>$this->Lang('teamdeleted'), 'eventid'=>$eventid));
 				}
 				else

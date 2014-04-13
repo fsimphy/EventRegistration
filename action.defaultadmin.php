@@ -25,15 +25,13 @@ $text .= $this->StartTabContent();
 	$text .= $this->StartTab('overview', $params);
 		$text .= $this->CreateFormStart($id, 'createevent');
 		$text .= $this->Lang('eventname').':'.$this->CreateInputText($id, 'eventname', '', 20, 128);
-		$text .= $this->Lang('maxmembersperteam').':'.$this->CreateInputText($id, 'maxmembersperteam', '10');
-		$text .= $this->Lang('minmembersperteam').':'.$this->CreateInputText($id, 'minmembersperteam', '1');
 		$text .= $this->CreateInputSubmit($id, 'submit', $this->Lang('createevent'));
 		$text .= $this->CreateFormEnd();
 
 		$text .= '<h3>'.$this->Lang('events').'</h3>';
 		$text .= '<ul>';
 		$db = $gCms->GetDb();
-		$Res = $db->Execute('SELECT * FROM '.cms_db_prefix().'module_eventregistration ORDER BY id');
+		$Res = $db->Execute('SELECT * FROM '.cms_db_prefix().'module_eventregistration_events ORDER BY id');
 		if($Res !== false)
 		{
 			while($row = $Res->FetchRow())

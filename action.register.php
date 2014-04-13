@@ -43,110 +43,80 @@ if(empty($params['eventid']))
 	return;
 }
 
-$counter = 0;
-$table='';
 $register = true;
 $update = false;
-$eventid = mysql_real_escape_string($params['eventid']);
-for($i=1;$i<=10;$i++)
-{
-	if(!empty($params["member$i"]))
-		$counter++;
-}
 
-if(empty($params['teamname']) || empty($params['mail']))
+if(empty($params['teamname']) || empty($params['mail']) || empty($params['phone']))
 {
 	$message = $this->Lang('error_not_enough_input');
 }
 else
 {
+	$eventid = mysql_real_escape_string($params['eventid']);
+	$teamname = mysql_real_escape_string($params['teamname'];
+	$password = mysql_real_escape_string($params['password']);
+	$mail = mysql_real_escape_string($params['mail']);
+	$phone = mysql_real_escape_string($params['phone']);
+
 	$db = $gCms->GetDb();
-	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration WHERE id=?';
+	$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_events WHERE id=?';
 	$Res = $db->Execute($sql, Array($eventid));
 	if($Res !== false)
 	{
 		if($row = $Res->FetchRow())
 		{
-			$eventname = $row['eventname'];
-			$maxmembersperteam = $row['maxmembersperteam'];
-			$minmembersperteam = $row['minmembersperteam'];
-			if($counter < $minmembersperteam)
+			$eventname = $row[eventname;]
+			$sql = 'SELECT teamname, password FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=? ODER by id';
+			$Res = $db->Execute($sql, Array($eventid));
+			if($Res !== false)
 			{
-				$message = $this->Lang('error_not_enough_input');
+				while($row = $Res->FetchRow())
+				{
+					if(strcmp($row['teamname'], $teamname) == 0)
+					{
+						if(!empty($password) && strcmp($row['password'], $password) == 0)
+						{
+							$update = true;
+						}
+						else
+							$message = $this->Lang('error_teamname_already_used');
+						$register = false;
+					}
+				}
 			}
 			else
+				$message = $this->Lang('error_database');
+
+			if(empty($password))
+				$password = generateRandStr(10);
+					
+			if($register)
 			{
-				$table = cms_db_prefix().'module_eventregistration_'.strtolower(str_replace(' ', '', mysql_real_escape_string($eventname)));
-				$Res = $db->Execute('SELECT teamname, password FROM '.$table.' ORDER BY id');
+				$command= 'INSERT INTO '.$table.' (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
+				$Res = $db->Execute($command);
 				if($Res !== false)
 				{
-					while($row = $Res->FetchRow())
-					{
-						if(strcmp($row['teamname'], $params['teamname']) == 0)
-						{
-							if(!empty($params['password']) && strcmp($row['password'], $params['password']) == 0)
-							{
-								$update = true;
-							}
-							else
-								$message = $this->Lang('error_teamname_already_used');
-							$register = false;
-						}
-					}
+					$message = $this->Lang('registration_successful');
+					sendMail($mail, $this->Lang('mail_text_register', $eventname, $teamname, $password), $this->Lang('mail_subject_register', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 				}
 				else
+				{
 					$message = $this->Lang('error_database');
+				}
+			}
+			else if($update)
+			{
+				$command = 'UPDATE '.$table.' SET mail=\''.$mail.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND teamname=\''.$teamname.'\'';
+				$Res = $db->Execute($command);
+				if($Res !== false)
+				{
+					$message = $this->Lang('update_successful');
+					sendMail($mail, $this->Lang('mail_text_update', $eventname, $teamname, $password), $this->Lang('mail_subject_update', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 
-				if(empty($params['password']))
-					$password = generateRandStr(10);
+				}
 				else
 				{
-					$password = $params['password'];
-				}
-						
-				if($register)
-				{
-					$command= 'INSERT INTO '.$table.' (teamname, mail';
-					for($i=1;$i<=$maxmembersperteam;$i++)
-					{
-						$command .= ", member$i";
-					}
-					$command .= ', password) VALUES(\''.$params['teamname'].'\', \''.$params['mail'].'\'';
-					for($i=1;$i<=$maxmembersperteam;$i++)
-					{
-						$command .= ', \''.$params["member$i"].'\'';
-					}
-					$command .= ', \''.$password.'\')';
-					$Res = $db->Execute($command);
-					if($Res !== false)
-					{
-						$message = $this->Lang('registration_successful');
-						sendMail($params['mail'], $this->Lang('mail_text_register', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_register', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
-					}
-					else
-					{
-						$message = $this->Lang('error_database');
-					}
-				}
-				else if($update)
-				{
-					$command = 'UPDATE '.$table.' SET mail=\''.$params['mail'].'\'';
-					for($i=1;$i<=$maxmembersperteam;$i++)
-					{
-						$command .= ", member$i='".$params["member$i"].'\'';
-					}
-					$command .= 'WHERE password=\''.$password.'\' AND teamname=\''.$params['teamname'].'\'';
-					$Res = $db->Execute($command);
-					if($Res !== false)
-					{
-						$message = $this->Lang('update_successful');
-						sendMail($params['mail'], $this->Lang('mail_text_update', $eventname, $params['teamname'], $password), $this->Lang('mail_subject_update', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
-
-					}
-					else
-					{
-						$message = $this->Lang('error_database');
-					}
+					$message = $this->Lang('error_database');
 				}
 			}
 		}
