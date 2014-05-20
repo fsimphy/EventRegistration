@@ -17,7 +17,7 @@ if($Res !== false)
 {
 	if($row = $Res->FetchRow())
 	{
-		$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_teams WHERE eventid=?';
+		$sql = 'SELECT * FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=?';
 		$Res = $db->Execute($sql, Array($eventid));
 		if($Res !== false)
 		{

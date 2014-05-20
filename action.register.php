@@ -86,11 +86,11 @@ else
 						}
 					}
 					if(empty($password))
-					$password = generateRandStr(10);
+						$password = generateRandStr(10);
 						
 					if($register)
 					{
-						$command= 'INSERT INTO 'cms_db_prefix().'module_eventregistration_teams (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
+						$command = 'INSERT INTO '.cms_db_prefix().'module_eventregistration_teams (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
 						$Res = $db->Execute($command);
 						if($Res !== false)
 						{
