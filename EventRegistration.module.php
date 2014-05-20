@@ -36,6 +36,9 @@ class EventRegistration extends CMSModule{
         $this->SetParameterType('eventname', CLEAN_STRING);
         $this->CreateParameter('eventid');
         $this->SetParameterType('eventid', CLEAN_INT);
+        $this->CreateParameter('maxteams');
+        $this->SetParameterType('maxteams', CLEAN_INT);
+
     }
 
     function GetVersion()

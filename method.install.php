@@ -13,7 +13,8 @@ $dict = NewDataDictionary($db);
 
 $flds = '
 	id I KEY NOTNULL AUTOINCREMENT,
-	eventname C(128)
+	eventname C(128),
+	maxteams I
 ';
 
 $sqlarray = $dict->CreateTableSQL(cms_db_prefix().'module_eventregistration_events', $flds, $taboptarray);

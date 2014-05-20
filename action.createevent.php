@@ -7,13 +7,14 @@ if (!$this->CheckPermission('Use EventRegistration'))
 	return false;
 }
 
-if(empty($params['eventname']))
+if(empty($params['eventname']) || empty($params['maxteams']))
 	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_params')));
 $eventname = $params['eventname'];
+$maxteams = $params['maxteams'];
 
 $db = $gCms->GetDb();
 
-$sql = 'INSERT INTO '.cms_db_prefix().'module_eventregistration_events (eventname) VALUES (\''.$eventname.'\')';
+$sql = 'INSERT INTO '.cms_db_prefix().'module_eventregistration_events (eventname, maxteams) VALUES (\''.$eventname.'\', \''.$maxteams.'\')';
 $Res = $db->Execute($sql);
 
 if($Res !== false)

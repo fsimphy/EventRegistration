@@ -20,7 +20,7 @@ $lang['mail'] = 'E-Mail-Adresse';
 $lang['password'] = 'Passwort';
 $lang['error_not_enough_input'] = 'Fehler: Sie haben nicht alle notwendigen, beziehungsweise nicht genügen Informationen angegeben.';
 $lang['error_teamname_already_used'] = 'Fehler: Der Teamname ist leider bereits in Verwendung, bitte wählen Sie einen anderen.';
-$lang['error_database'] = 'Fehler: Die Anmeldung konnte auf Grund eines Datenbankfehlers nicht erfolgen, bitte kontaktieren Sie den Administrator.';
+$lang['error_database'] = 'Fehler: Datenbankfehler, bitte kontaktieren Sie den Administrator.';
 $lang['registration_successful'] = 'Anmeldung erfolgreich. Sie erhalten in Kürze eine Bestätigunsmail mit Ihrem Passwort.';
 $lang['update_successful'] = 'Aktualisierung erfolgreich. Sei erhalten in Kürze eine Bestätigungsmail mit Ihrem Passwort.';
 $lang['mail_text_register'] = 'Sie haben sich erfolgreich zur Veranstaltung "%s" angemeldet. Der Name Ihres Teams lautet "%s" und Ihr Passwort ist "%s".';
@@ -45,4 +45,7 @@ $lang['from'] = '"Von"-Adresse';
 $lang['save'] = 'Speichern';
 $lang['back_to_eventlist'] = 'Zurück zur Veranstaltungsliste';
 $lang['preferences_updated_successfully'] = 'Einstellungen erfolgreich gespeichert';
+$lang['event_is_full'] = 'Leider ist die maximale Teilnehmerzahl bereits erreicht.';
+$lang['maxteams'] = 'Maximale Anzahl an teams';
+$lang['registered_teams'] = 'Anzahl an registrierten Teams';
 ?>

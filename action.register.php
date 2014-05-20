@@ -70,60 +70,72 @@ else
 			$Res = $db->Execute($sql, Array($eventid));
 			if($Res !== false)
 			{
-				while($row = $Res->FetchRow())
+				if($Res->RecordCount() < $row['maxteams'] || $row['maxteams'] == 0)
 				{
-					if(strcmp($row['teamname'], $teamname) == 0)
+					while($row = $Res->FetchRow())
 					{
-						if(!empty($password) && strcmp($row['password'], $password) == 0)
+						if(strcmp($row['teamname'], $teamname) == 0)
 						{
-							$update = true;
+							if(!empty($password) && strcmp($row['password'], $password) == 0)
+							{
+								$update = true;
+							}
+							else
+								$message = $this->Lang('error_teamname_already_used');
+							$register = false;
+						}
+					}
+					if(empty($password))
+					$password = generateRandStr(10);
+						
+					if($register)
+					{
+						$command= 'INSERT INTO 'cms_db_prefix().'module_eventregistration_teams (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
+						$Res = $db->Execute($command);
+						if($Res !== false)
+						{
+							$message = $this->Lang('registration_successful');
+							sendMail($mail, $this->Lang('mail_text_register', $eventname, $teamname, $password), $this->Lang('mail_subject_register', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
 						}
 						else
-							$message = $this->Lang('error_teamname_already_used');
-						$register = false;
+						{
+							$message = $this->Lang('error_database');
+						}
 					}
+					else if($update)
+					{
+						$command = 'UPDATE '.$table.' SET mail=\''.$mail.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND teamname=\''.$teamname.'\'';
+						$Res = $db->Execute($command);
+						if($Res !== false)
+						{
+							$message = $this->Lang('update_successful');
+							sendMail($mail, $this->Lang('mail_text_update', $eventname, $teamname, $password), $this->Lang('mail_subject_update', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
+
+						}
+						else
+						{
+							$message = $this->Lang('error_database');
+						}
+					}
+				}
+				else
+				{
+					$message = $this->Lang('event_is_full');
 				}
 			}
 			else
+			{
 				$message = $this->Lang('error_database');
-
-			if(empty($password))
-				$password = generateRandStr(10);
-					
-			if($register)
-			{
-				$command= 'INSERT INTO 'cms_db_prefix().'module_eventregistration_teams (teamname, phone, mail, password, event_id) VALUES(\''.$teamname.'\', \''.$phone.'\', \''.$mail.'\', \''.$password.'\', \''.$eventid.'\')';
-				$Res = $db->Execute($command);
-				if($Res !== false)
-				{
-					$message = $this->Lang('registration_successful');
-					sendMail($mail, $this->Lang('mail_text_register', $eventname, $teamname, $password), $this->Lang('mail_subject_register', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
-				}
-				else
-				{
-					$message = $this->Lang('error_database');
-				}
-			}
-			else if($update)
-			{
-				$command = 'UPDATE '.$table.' SET mail=\''.$mail.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND teamname=\''.$teamname.'\'';
-				$Res = $db->Execute($command);
-				if($Res !== false)
-				{
-					$message = $this->Lang('update_successful');
-					sendMail($mail, $this->Lang('mail_text_update', $eventname, $teamname, $password), $this->Lang('mail_subject_update', $eventname), $this->GetPreference('fromuser').'<'.$this->GetPreference('from').'>');
-
-				}
-				else
-				{
-					$message = $this->Lang('error_database');
-				}
 			}
 		}
 		else
 		{
 			$message = $this->Lang('event_does_not_exist');
 		}
+	}
+	else
+	{
+		$message = $this->Lang('error_database');
 	}
 }
 $this->smarty->assign('message', $message);
