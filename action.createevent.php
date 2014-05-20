@@ -11,6 +11,8 @@ if(empty($params['eventname']))
 	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_input')));
 $eventname = $params['eventname'];
 $maxteams = $params['maxteams'];
+if($maxteams < 0)
+	$maxteams = 0;
 
 $db = $gCms->GetDb();
 

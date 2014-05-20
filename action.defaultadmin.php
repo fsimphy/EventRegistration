@@ -25,7 +25,7 @@ $text .= $this->StartTabContent();
 	$text .= $this->StartTab('overview', $params);
 		$text .= $this->CreateFormStart($id, 'createevent');
 		$text .= $this->Lang('eventname').':'.$this->CreateInputText($id, 'eventname', '', 20, 128);
-		$text .= $this->Lang('max_teams').':'.$this->CreateInputText($id, 'maxteams', '0', 20, 20);
+		$text .= $this->Lang('max_teams_create').':'.$this->CreateInputText($id, 'maxteams', '0', 20, 20);
 		$text .= $this->CreateInputSubmit($id, 'submit', $this->Lang('createevent'));
 		$text .= $this->CreateFormEnd();
 
