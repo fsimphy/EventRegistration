@@ -46,6 +46,6 @@ $lang['save'] = 'Speichern';
 $lang['back_to_eventlist'] = 'Zurück zur Veranstaltungsliste';
 $lang['preferences_updated_successfully'] = 'Einstellungen erfolgreich gespeichert';
 $lang['event_is_full'] = 'Leider ist die maximale Teilnehmerzahl bereits erreicht.';
-$lang['maxteams'] = 'Maximale Anzahl an teams';
+$lang['max_teams'] = 'Maximale Anzahl an teams';
 $lang['registered_teams'] = 'Anzahl an registrierten Teams';
 ?>

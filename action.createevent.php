@@ -8,7 +8,7 @@ if (!$this->CheckPermission('Use EventRegistration'))
 }
 
 if(empty($params['eventname']))
-	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_params')));
+	$this->Redirect($id, 'defaultadmin', '', Array('module_message'=>$this->Lang('not_enough_input')));
 $eventname = $params['eventname'];
 $maxteams = $params['maxteams'];
 
