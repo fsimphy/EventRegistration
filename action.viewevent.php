@@ -31,7 +31,7 @@ else
 				$text .= '<h2>'.$eventname.'</h2>';
 				if($maxteams > 0)
 					$text .= '<p>'.$this->Lang('max_teams').': '.$maxteams.'</p>';
-				$test .= '<p>'.$this->Lang('registered_teams').': '.$Res->RecordCount().'</p>';
+				$text .= '<p>'.$this->Lang('registered_teams').': '.$Res->RecordCount().'</p>';
 				$text .= '<p>'.$this->CreateLink($id, 'deleteevent', '', $this->Lang('deleteevent'), Array('eventid'=>$eventid), $this->Lang('really_delete')).'</p>';
 				$text .= '<p><a href="'.$gCms->config['root_url'].'/modules/EventRegistration/download.php?eventid='.$eventid.'">'.$this->Lang('csv').'</a></p>';
 				while($row = $Res->FetchRow())
