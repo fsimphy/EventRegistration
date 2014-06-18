@@ -66,7 +66,7 @@ else
 		if($row = $Res->FetchRow())
 		{
 			$eventname = $row[eventname];
-			$sql = 'SELECT teamname, password FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=? ORDER by id';
+			$sql = 'SELECT mail, password FROM '.cms_db_prefix().'module_eventregistration_teams WHERE event_id=? ORDER by id';
 			$Res = $db->Execute($sql, Array($eventid));
 			if($Res !== false)
 			{
@@ -74,14 +74,14 @@ else
 				{
 					while($row = $Res->FetchRow())
 					{
-						if(strcmp($row['teamname'], $teamname) == 0)
+						if(strcmp($row['mail'], $mail) == 0)
 						{
 							if(!empty($password) && strcmp($row['password'], $password) == 0)
 							{
 								$update = true;
 							}
 							else
-								$message = $this->Lang('error_teamname_already_used');
+								$message = $this->Lang('error_mail_already_used');
 							$register = false;
 						}
 					}
@@ -104,7 +104,7 @@ else
 					}
 					else if($update)
 					{
-						$command = 'UPDATE '.$table.' SET mail=\''.$mail.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND teamname=\''.$teamname.'\'';
+						$command = 'UPDATE '.$table.' SET teamname=\''.$teamname.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND mail=\''.$mail.'\'';
 						$Res = $db->Execute($command);
 						if($Res !== false)
 						{
