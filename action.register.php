@@ -104,7 +104,7 @@ else
 					}
 					else if($update)
 					{
-						$command = 'UPDATE '.$table.' SET teamname=\''.$teamname.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND mail=\''.$mail.'\'';
+						$command = 'UPDATE '.cms_db_prefix().'module_eventregistration_teams SET teamname=\''.$teamname.'\', phone=\''.$phone.'\' WHERE password=\''.$password.'\' AND mail=\''.$mail.'\'';
 						$Res = $db->Execute($command);
 						if($Res !== false)
 						{
